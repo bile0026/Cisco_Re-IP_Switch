@@ -1,0 +1,29 @@
+---
+---
+- name: Check for online hosts
+  hosts: all
+  gather_facts: false
+  connection: network_cli
+  vars_files:
+    - cisco_vars.yml
+
+  tasks:
+    - name: Ping for reachability
+      command: ping -c1 {{ inventory_hostname }}
+      delegate_to: localhost
+      register: ping_result
+      ignore_errors: true
+
+    - name: Group hosts by online
+      group_by: key=reachable
+      when: ping_result.rc == 0
+
+- name: Backup Switch Configurations
+  hosts: reachable
+  gather_facts: true
+  connection: network_cli
+  vars_files:
+    - cisco_vars.yml
+
+  tasks:
+  - name:

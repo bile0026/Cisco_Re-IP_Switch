@@ -1,0 +1,9 @@
+---
+# vars file for cisco_re-ip_switch
+
+ansible_network_os: ios
+platform: "cisco"
+current_date: "{{ lookup('pipe','date +%Y-%m-%d') }}"
+yesterday_date: "{{ lookup('pipe','date +%Y-%m-%d --date=yesterday' ) }}"
+# ansible_ssh_user: ########
+# ansible_ssh_pass: ########
