@@ -5,5 +5,6 @@ ansible_network_os: ios
 platform: "cisco"
 source_interface: vlan 100
 target_interfaces: vlan 4000
+new_subnet: 
 # ansible_ssh_user: ########
 # ansible_ssh_pass: ########
