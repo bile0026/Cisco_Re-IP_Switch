@@ -1,7 +1,7 @@
-Role Name
+Cisco_re-ip_Switch
 =========
 
-A brief description of the role goes here.
+Updates switch local IP from one L3 SVI to another with a new IP. Moves it to a new subnet, keeping the last octet the same, as long as it is not pingable.
 
 Requirements
 ------------
