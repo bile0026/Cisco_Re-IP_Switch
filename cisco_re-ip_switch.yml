@@ -18,12 +18,12 @@
       group_by: key=reachable
       when: ping_result.rc == 0
 
-- name: Backup Switch Configurations
+- name: Re-IP Switch
   hosts: reachable
   gather_facts: true
   connection: network_cli
   vars_files:
     - cisco_vars.yml
 
-  tasks:
-  - name:
+  roles:
+    - cisco_re-ip_switch
