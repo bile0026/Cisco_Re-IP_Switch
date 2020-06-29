@@ -1,13 +1,32 @@
 ---
 # tasks file for cisco_re-ip_switch
 - name: Set target_ip
-  set_fact: target_ip="{{ ansible_facts.ipv4 | regex_replace('s/[0-9]+$/', )  }}"
+  set_fact: target_ip="{{ ansible_facts.ipv4 | regex_replace('^[0-9]+\.[0-9]+\.[0-9]+\.', 'new_subnet' ) }}"
 
+- name: Ping new IP to make sure it is not in use
+  command: ping -c1 {{ target_ip }}
+  delegate_to: localhost
+  register: ping_result
+  ignore_errors: true
 
 - name: Set new IP for target vlan {{ target_interface }}
   ios_l3_interfaces:
     config:
-      - name: "{{ target_vlan }}"
-        ipv4:
+      name: "{{ target_interface }}"
+      ipv4:
         - address: "{{ target_ip }}"
     state: replaced
+  when: ping_result.rc > 0
+
+- name: Re-ping new IP to make sure it's online
+  command: ping -c1 {{ target_ip }}
+  delegate_to: localhost
+  register: ping_result2
+  ignore_errors: true
+
+- name: Remove old IP as long as new IP is pingable
+  ios_l3_interfaces:
+    config:
+      name: "{{ source_interface }}"
+    state: deleted
+  when: ping_reault2.rc == 0

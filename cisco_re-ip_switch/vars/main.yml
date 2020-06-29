@@ -4,9 +4,9 @@
 ansible_network_os: ios
 platform: "cisco"
 source_interface: vlan 100
-target_interfaces: vlan 4000
-current_subnet: "10.101.1."
-new_subnet: "10.103.252."
+target_interface: vlan 4000
+current_subnet: "10.101.1." # make sure to keep the . at the end so the regex works properly
+new_subnet: "10.103.252." # make sure to keep the . at the end so the regex works properly
 subnet_mask: "255.255.254.0"
 # ansible_ssh_user: ########
 # ansible_ssh_pass: ########
