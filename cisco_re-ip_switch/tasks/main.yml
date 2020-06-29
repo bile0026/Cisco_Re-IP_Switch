@@ -1,2 +1,13 @@
 ---
-# tasks file for ansible_role_default
+# tasks file for cisco_re-ip_switch
+- name: Set target_ip
+  set_fact: target_ip="{{ ansible_facts.ipv4 | regex_replace('s/[0-9]+$/', )  }}"
+
+
+- name: Set new IP for target vlan {{ target_interface }}
+  ios_l3_interfaces:
+    config:
+      - name: "{{ target_vlan }}"
+        ipv4:
+        - address: "{{ target_ip }}"
+    state: replaced
