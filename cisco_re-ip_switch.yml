@@ -19,8 +19,6 @@
   hosts: reachable
   gather_facts: true
   connection: network_cli
-  vars_files:
-    - cisco_vars.yml
 
   roles:
     - cisco_re-ip_switch
