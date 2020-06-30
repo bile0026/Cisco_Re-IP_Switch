@@ -24,6 +24,10 @@
   register: ping_result2
   ignore_errors: true
 
+- name: Change default gateway
+  ios_config:
+    lines: "ip default-gateway {{ default_gateway }}"
+
 - name: Remove old IP as long as new IP is pingable
   ios_l3_interfaces:
     config:
