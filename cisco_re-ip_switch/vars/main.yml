@@ -1,7 +1,6 @@
 ---
 # vars file for cisco_re-ip_switch
 
-ansible_network_os: ios
 platform: "cisco"
 source_interface: vlan 100 # current layer 3 SVI management interface
 target_interface: vlan 4000 # target for new layer 3 SVI management interface
