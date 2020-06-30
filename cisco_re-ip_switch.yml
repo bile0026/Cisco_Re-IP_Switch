@@ -20,5 +20,6 @@
   gather_facts: true
   connection: network_cli
 
-  roles:
-    - cisco_re-ip_switch
+  roles: cisco_re-ip_switch
+  vars:
+    ansible_network_os: ios
