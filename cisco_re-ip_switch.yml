@@ -2,7 +2,7 @@
 - name: Check for online hosts
   hosts: all
   gather_facts: false
-  connection: network_cli
+  connection: local
 
   tasks:
     - name: Ping for reachability
@@ -14,6 +14,7 @@
     - name: Group hosts by online
       group_by: key=reachable
       when: ping_result.rc == 0
+      delegate_to: localhost
 
 - name: Re-IP Switch
   hosts: reachable
