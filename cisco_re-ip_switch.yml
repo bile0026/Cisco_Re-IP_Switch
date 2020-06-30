@@ -18,7 +18,7 @@
 
 - name: Re-IP Switch
   hosts: reachable
-  gather_facts: true
+  gather_facts: false
   connection: network_cli
 
   tasks:
