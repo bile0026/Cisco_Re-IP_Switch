@@ -51,10 +51,13 @@
     state: started
     timeout: 120
   delegate_to: localhost
+  register: wait_result
 
 - name: Remove old IP as long as new IP is pingable
   ios_l3_interfaces:
     config:
       name: "{{ source_interface }}"
     state: deleted
-  when: ping_result2.rc == 0
+  when:
+    - ping_result2.rc == 0
+    - wait_result|succeeded
