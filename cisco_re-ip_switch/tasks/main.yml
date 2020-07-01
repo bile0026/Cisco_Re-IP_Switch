@@ -1,7 +1,15 @@
 ---
 # tasks file for cisco_re-ip_switch
+- name: Gather switch information
+  ios_facts:
+    gather_subset: l3_interfaces
+  register: ios_result
+
+- name: Build varible for finding target_ip
+  set_fact: ip_string="ios_result.ansible_net_interfaces.vlan{{ source_vlan_number }}.ipv4.address"
+
 - name: Set target_ip
-  set_fact: target_ip="{{ ansible_facts.ipv4 | regex_replace('^[0-9]+\.[0-9]+\.[0-9]+\.', new_subnet ) }}{{ new_cidr }}"
+  set_fact: target_ip="{{ ip_string | regex_replace('^[0-9]+\.[0-9]+\.[0-9]+\.', new_subnet ) }}{{ new_cidr }}"
 
 - name: Ping new IP to make sure it is not in use
   command: ping -c1 {{ target_ip }}
