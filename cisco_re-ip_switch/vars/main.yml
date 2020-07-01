@@ -3,6 +3,7 @@
 
 platform: "cisco"
 source_interface: vlan 100 # current layer 3 SVI management interface
+source_vlan_number: 100 # current vlan number for building string
 target_interface: vlan 4000 # target for new layer 3 SVI management interface
 current_subnet: "1192.168.101." # make sure to keep the . at the end so the regex works properly
 new_subnet: "192.168.103." # make sure to keep the . at the end so the regex works properly
