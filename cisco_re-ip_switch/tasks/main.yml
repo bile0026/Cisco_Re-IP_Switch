@@ -37,15 +37,17 @@
     lines: "ip default-gateway {{ default_gateway }}"
   when: ping_result2.rc == 0
 
-- name: Remove old IP as long as new IP is pingable
-  ios_l3_interfaces:
-    config:
-      name: "{{ source_interface }}{{ old_cidr }}"
-    state: deleted
-  when: ping_result2.rc == 0
+- name: Wait for new ip {{ target_ip }} to be reachable
   wait_for:
     host: "{{ target_ip }}"
     port: 22
     sleep: 2
     state: started
     timeout: 120
+
+- name: Remove old IP as long as new IP is pingable
+  ios_l3_interfaces:
+    config:
+      name: "{{ source_interface }}{{ old_cidr }}"
+    state: deleted
+  when: ping_result2.rc == 0
