@@ -26,7 +26,13 @@
       ipv4:
         - address: "{{ target_ip }} + {{ ip_string.subnet }}"
     state: replaced
+  register: new_ip_result
   when: ping_result.rc > 0
+
+- name: Change default gateway
+  ios_config:
+    lines: "ip default-gateway {{ default_gateway }}"
+  when: new_ip_result|succeeded
 
 - name: Re-ping new IP to make sure it's online
   command: ping -c1 {{ target_ip }}
@@ -34,14 +40,10 @@
   register: ping_result2
   ignore_errors: true
 
-- name: Change default gateway
-  ios_config:
-    lines: "ip default-gateway {{ default_gateway }}"
-  when: ping_result2.rc == 0
-
 - name: Update host IP
   set_fact:
     ansible_host: "{{ target_ip }}"
+  when: ping_result2.rc == 0
 
 - name: Wait for new ip {{ target_ip }} to be reachable
   wait_for:
