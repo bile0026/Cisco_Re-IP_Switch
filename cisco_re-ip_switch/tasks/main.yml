@@ -6,7 +6,7 @@
   register: ios_result
 
 - name: Build varible for finding target_ip
-  set_fact: ip_string="ios_result.ansible_facts.ansible_net_interfaces.vlan{{ source_interface }}.ipv4.address"
+  set_fact: ip_string="{{ ios_result.ansible_facts.ansible_net_interfaces[(lookup('vars', 'source_interface'))] }}"
 
 - name: Set target_ip
   set_fact: target_ip="{{ ip_string | regex_replace('^[0-9]+\.[0-9]+\.[0-9]+\.', new_subnet ) }}{{ new_cidr }}"
