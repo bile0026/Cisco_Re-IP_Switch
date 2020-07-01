@@ -6,10 +6,10 @@
   register: ios_result
 
 - name: Build varible for finding target_ip
-  set_fact: ip_string="{{ ios_result.ansible_facts.ansible_net_interfaces[(lookup('vars', 'source_interface'))] }}"
+  set_fact: ip_string="{{ ios_result.ansible_facts.ansible_net_interfaces[(lookup('vars', 'source_interface'))].ipv4[0] }}"
 
 - name: Set target_ip
-  set_fact: target_ip="{{ ip_string | regex_replace('^[0-9]+\.[0-9]+\.[0-9]+\.', new_subnet ) }}{{ new_cidr }}"
+  set_fact: target_ip="{{ ip_string.address | regex_replace('^[0-9]+\.[0-9]+\.[0-9]+\.', new_subnet ) }}{{ new_cidr }}"
 
 - name: Ping new IP to make sure it is not in use
   command: ping -c1 {{ target_ip }}
@@ -22,7 +22,7 @@
     config:
       name: "{{ target_interface }}"
       ipv4:
-        - address: "{{ target_ip }}"
+        - address: "{{ target_ip }} + {{ ip_string.subnet }}"
     state: replaced
   when: ping_result.rc > 0
 
@@ -35,6 +35,7 @@
 - name: Change default gateway
   ios_config:
     lines: "ip default-gateway {{ default_gateway }}"
+  when: ping_result2.rc == 0
 
 - name: Remove old IP as long as new IP is pingable
   ios_l3_interfaces:
@@ -42,3 +43,9 @@
       name: "{{ source_interface }}{{ old_cidr }}"
     state: deleted
   when: ping_result2.rc == 0
+  wait_for:
+    host: "{{ target_ip }}"
+    port: 22
+    sleep: 2
+    state: started
+    timeout: 120
