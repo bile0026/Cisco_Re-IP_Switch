@@ -21,11 +21,11 @@
 
 - name: Set new IP for target vlan {{ target_interface }}
   ios_l3_interfaces:
-    config:
-      name: "{{ target_interface }}"
-      ipv4:
-        - address: "{{ target_ip }} + {{ ip_string.subnet }}"
-    state: replaced
+  config:
+    name: "{{ target_interface }}"
+    ipv4:
+      - address: "{{ target_ip }} + {{ ip_string.subnet }}"
+  state: replaced
   register: new_ip_result
   when: ping_result.rc > 0
 
@@ -57,9 +57,9 @@
 
 - name: Remove old IP as long as new IP is pingable
   ios_l3_interfaces:
-    config:
-      name: "{{ source_interface }}"
-    state: deleted
+  config:
+    name: "{{ source_interface }}"
+  state: deleted
   when:
     - ping_result2.rc == 0
     - wait_result|succeeded
