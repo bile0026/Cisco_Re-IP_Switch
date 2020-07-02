@@ -4,7 +4,7 @@
 platform: "cisco"
 source_interface: vlan100 # current layer 3 SVI management interface
 target_interface: vlan4000 # target for new layer 3 SVI management interface
-current_subnet: "1192.168.101." # make sure to keep the . at the end so the regex works properly
+current_subnet: "192.168.101." # make sure to keep the . at the end so the regex works properly
 new_subnet: "192.168.103." # make sure to keep the . at the end so the regex works properly
 old_cidr: "/24" # concatinates to the end of the IP address for the ios_l3_interfaces config
 new_cidr: "/24" # concatinates to the end of the IP address for the ios_l3_interfaces config
