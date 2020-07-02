@@ -42,12 +42,12 @@
   register: new_ip_result
   when:
     - ping_result.rc > 0
-    - interface_result | changed
+    - interface_result.changed
 
 - name: Change default gateway
   ios_config:
     lines: "ip default-gateway {{ default_gateway }}"
-  when: new_ip_result|changed
+  when: new_ip_result.changed
 
 - name: Re-ping new IP to make sure it's online
   command: ping -c1 {{ target_ip }}
