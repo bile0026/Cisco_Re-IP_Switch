@@ -49,7 +49,7 @@
 - name: Update host IP
   set_fact:
     ansible_host: "{{ target_ip }}"
-  when: re_ip_result.changed
+  when: new_ip_result.changed
 
 - name: Change default gateway
   ios_config:
