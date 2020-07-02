@@ -29,7 +29,7 @@
       - name: "{{ target_interface }}"
         ipv4:
         - address: "{{ new_ip }}"
-    state: replaced
+    state: merged
   register: new_ip_result
   when: ping_result.rc > 0
 
