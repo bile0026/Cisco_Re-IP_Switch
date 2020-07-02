@@ -36,7 +36,7 @@
 - name: Change default gateway
   ios_config:
     lines: "ip default-gateway {{ default_gateway }}"
-  when: new_ip_result|succeeded
+  when: new_ip_result|changed
 
 - name: Re-ping new IP to make sure it's online
   command: ping -c1 {{ target_ip }}
