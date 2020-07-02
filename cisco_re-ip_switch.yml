@@ -26,4 +26,3 @@
         name: cisco_re-ip_switch
       vars:
         ansible_network_os: ios
-
