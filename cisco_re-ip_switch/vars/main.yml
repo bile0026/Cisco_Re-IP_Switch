@@ -6,8 +6,8 @@ source_interface: vlan100 # current layer 3 SVI management interface
 target_interface: vlan4000 # target for new layer 3 SVI management interface
 current_subnet: "192.168.101." # make sure to keep the . at the end so the regex works properly
 new_subnet: "192.168.103." # make sure to keep the . at the end so the regex works properly
-old_cidr: "/24" # concatinates to the end of the IP address for the ios_l3_interfaces config
-new_cidr: "/24" # concatinates to the end of the IP address for the ios_l3_interfaces config
+old_cidr: "/24" # concatenates to the end of the IP address for the ios_l3_interfaces config
+new_cidr: "/24" # concatenates to the end of the IP address for the ios_l3_interfaces config
 default_gateway: "192.168.103.1" # new default gateway to set if re-ip is successful
-# ansible_ssh_user: ########
-# ansible_ssh_pass: ########
+# ansible_ssh_user:
+# ansible_ssh_pass:
