@@ -23,7 +23,16 @@
   register: ping_result
   ignore_errors: true
 
-- name: Set new IP for target vlan {{ target_interface }}
+- name: Create svi for {{ target_interface }}
+  ios_interfaces:
+    config:
+      - name: "{{ target_interface }}"
+        description: "MANAGMENT INTERFACE"
+        enabled: True
+    state: merged
+  register: interface_result
+
+- name: Set new IP for target interface {{ target_interface }}
   ios_l3_interfaces:
     config:
       - name: "{{ target_interface }}"
@@ -31,7 +40,9 @@
         - address: "{{ new_ip }}"
     state: replaced
   register: new_ip_result
-  when: ping_result.rc > 0
+  when:
+    - ping_result.rc > 0
+    - interface_result | changed
 
 - name: Change default gateway
   ios_config:
