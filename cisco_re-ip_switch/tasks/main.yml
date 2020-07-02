@@ -15,7 +15,7 @@
 
 - name: Set new IP variable for {{ target_interface }}
   set_fact:
-    new_ip: "{{ target_ip }} + {{ ip_string.subnet }}"
+    new_ip: "{{ target_ip }}/{{ ip_string.subnet }}"
 
 - name: Ping new IP to make sure it is not in use
   command: ping -c1 {{ target_ip }}
@@ -28,7 +28,7 @@
     config:
       - name: "{{ target_interface }}"
         ipv4:
-        - address: "{{ target_ip }} + {{ ip_string.subnet }}"
+        - address: "{{ new_ip }}"
     state: replaced
   register: new_ip_result
   when: ping_result.rc > 0
