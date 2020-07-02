@@ -13,6 +13,10 @@
   set_fact:
     target_ip: "{{ ip_string.address | regex_replace('^[0-9]+\\.[0-9]+\\.[0-9]+\\.', new_subnet ) }}"
 
+- name: Set new IP variable for {{ target_interface }}
+  set_fact:
+    new_ip: "{{ target_ip }} + {{ ip_string.subnet }}"
+
 - name: Ping new IP to make sure it is not in use
   command: ping -c1 {{ target_ip }}
   delegate_to: localhost
