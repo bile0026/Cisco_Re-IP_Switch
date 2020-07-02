@@ -18,7 +18,7 @@
     new_ip: "{{ target_ip }}/{{ ip_string.subnet }}"
 
 - name: Ping new IP to make sure it is not in use
-  command: ping -c1 {{ target_ip }}
+  command: ping -c2 {{ target_ip }}
   delegate_to: localhost
   register: ping_result
   ignore_errors: true
@@ -50,7 +50,7 @@
   when: new_ip_result.changed
 
 - name: Re-ping new IP to make sure it's online
-  command: ping -c1 {{ target_ip }}
+  command: ping -c2 {{ target_ip }}
   delegate_to: localhost
   register: ping_result2
   ignore_errors: true
