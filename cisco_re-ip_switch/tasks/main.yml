@@ -2,7 +2,7 @@
 # tasks file for cisco_re-ip_switch
 - name: Gather switch information
   ios_facts:
-    gather_subset: l3_interfaces
+    gather_subset: interfaces
   register: ios_result
 
 - name: Build varible for finding target_ip
