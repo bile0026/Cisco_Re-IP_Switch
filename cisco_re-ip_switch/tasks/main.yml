@@ -31,6 +31,8 @@
         enabled: True
     state: merged
   register: interface_result
+  when:
+    - ping_result.rc > 0
 
 - name: Set new IP for target interface {{ target_interface }}
   ios_l3_interfaces:
