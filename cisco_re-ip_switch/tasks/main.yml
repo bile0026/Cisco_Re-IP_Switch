@@ -11,7 +11,7 @@
 
 - name: Set target_ip
   set_fact:
-    target_ip: "{{ ip_string.address | regex_replace('^[0-9]+\.[0-9]+\.[0-9]+\.', new_subnet ) }}{{ new_cidr }}"
+    target_ip: "{{ ip_string.address | regex_replace("'^[0-9]+\.[0-9]+\.[0-9]+\.'", new_subnet ) }}"
 
 - name: Ping new IP to make sure it is not in use
   command: ping -c1 {{ target_ip }}
