@@ -3,6 +3,8 @@ Re-IP a Cisco switch from one vlan to another
 
 First draft is working, needs additonal testing.
 
+The handler for saving the config is commented out by default. If you want the config to save at the end of the playbook uncomment the ```notify: save ios``` line in the last task in cisco_re-ip_switch/tasks/main.yml.
+
 An ansible.cfg file is included to disable host key checking for this playbook. This is required due to the host key changing when the IP changes. You can choose to use your own ansible.cfg file if you wish instead.
 
 To use this playbook/role, update the vars in ```cisco_re-ip_switch/vars/main.yml```.
