@@ -51,9 +51,13 @@
 #     ansible_host: "{{ target_ip }}"
 #   when: new_ip_result.changed
 
-- name: Change default gateway
+- name: Change default gateway, tacacs, NTP
   ios_config:
-    lines: "ip default-gateway {{ default_gateway }}"
+    lines:
+      - "ip tacacs source-interface {{ target_interface }}"
+      - "ntp source {{ target_interface }}"
+      - "logging source-interface {{ target_interface }}"
+      - "ip default-gateway {{ default_gateway }}"
   when: new_ip_result.changed
   ignore_errors: True
 
