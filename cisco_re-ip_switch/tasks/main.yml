@@ -46,15 +46,16 @@
     - ping_result.rc > 0
     - interface_result.changed
 
-- name: Update host IP
-  set_fact:
-    ansible_host: "{{ target_ip }}"
-  when: new_ip_result.changed
+# - name: Update host IP
+#   set_fact:
+#     ansible_host: "{{ target_ip }}"
+#   when: new_ip_result.changed
 
 - name: Change default gateway
   ios_config:
     lines: "ip default-gateway {{ default_gateway }}"
   when: new_ip_result.changed
+  ignore_errors: True
 
 - name: Re-ping new IP to make sure it's online
   command: ping -c2 {{ target_ip }}
@@ -62,10 +63,12 @@
   register: ping_result2
   ignore_errors: true
 
-# - name: Update host IP
-#   set_fact:
-#     ansible_host: "{{ target_ip }}"
-#   when: ping_result2.rc == 0
+- name: Update host IP
+  set_fact:
+    ansible_host: "{{ target_ip }}"
+  when:
+    - new_ip_result.changed
+    - ping_result2.rc == 0
 
 - name: Wait for new ip {{ target_ip }} to be reachable
   wait_for:
