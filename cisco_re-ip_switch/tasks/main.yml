@@ -89,6 +89,12 @@
     config:
       - name: "{{ source_interface }}"
     state: deleted
+  register: remove_ip
   when:
     - ping_result2.rc == 0
     #- wait_result|succeeded
+
+- name: Remove {{ source_interface }} after IP is removed
+  ios_config:
+    lines: "no interface {{ source_interface }}"
+  when: remove_ip.changed
