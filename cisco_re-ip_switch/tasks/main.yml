@@ -83,6 +83,9 @@
     timeout: 120
   delegate_to: localhost
   register: wait_result
+  when:
+      - new_ip_result.changed
+
 
 - name: Remove old IP as long as new IP is pingable
   ios_l3_interfaces:
