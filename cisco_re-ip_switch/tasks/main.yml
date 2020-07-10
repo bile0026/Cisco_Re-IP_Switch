@@ -21,6 +21,7 @@
   command: ping -c2 {{ target_ip }}
   delegate_to: localhost
   register: ping_result
+  failed_when: ping_result.rc == 0
   ignore_errors: true
 
 - name: Create svi for {{ target_interface }}
