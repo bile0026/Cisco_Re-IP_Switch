@@ -30,7 +30,7 @@
     that:
       - not ping_result.rc == 0
     fail_msg: "{{ new_ip }} already exists, need to change manually."
-    success_msg: "{{ new_ip }} does not exist, moving on!"
+    success_msg: "{{ new_ip }} does not exist, moving on to new IP's!"
   register: ip_assertion
 
 - name: Create svi for {{ target_interface }}
