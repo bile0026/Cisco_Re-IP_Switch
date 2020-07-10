@@ -25,7 +25,7 @@
   ignore_errors: true
 
 - name: Assert that {{ new_ip }} address does not exist already on the network
-  asset:
+  assert:
     that:
       - not ping_result.rc == 0
     fail_msg: "{{ new_ip }} already exists, need to change manually."
