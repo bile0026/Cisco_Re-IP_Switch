@@ -4,10 +4,10 @@
 platform: "cisco"
 source_interface: Vlan100 # current layer 3 SVI management interface
 target_interface: Vlan4000 # target for new layer 3 SVI management interface
-current_subnet: "192.168.101." # make sure to keep the . at the end so the regex works properly
+#current_subnet: "192.168.101." # make sure to keep the . at the end so the regex works properly (no longer needed?)
 new_subnet: "192.168.103." # make sure to keep the . at the end so the regex works properly
-old_cidr: "/24" # concatenates to the end of the IP address for the ios_l3_interfaces config
-new_cidr: "/24" # concatenates to the end of the IP address for the ios_l3_interfaces config
-default_gateway: "192.168.103.1" # new default gateway to set if re-ip is successful
+#old_cidr: "/24" # concatenates to the end of the IP address for the ios_l3_interfaces config (no longer needed?)
+#new_cidr: "/24" # concatenates to the end of the IP address for the ios_l3_interfaces config (no longer needed?)
+default_gateway: "{{ new_subnet }}1" # new default gateway to set if re-ip is successful. Change the "1" at the end to your gateway IP. Or you can manually specify your gateway IP instead of using new_subnet
 # ansible_ssh_user:
 # ansible_ssh_pass:
