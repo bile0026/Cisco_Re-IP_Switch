@@ -91,6 +91,7 @@
     state: deleted
   register: remove_ip
   when:
+    - new_ip_result.changed
     - ping_result2.rc == 0
     #- wait_result|succeeded
 
