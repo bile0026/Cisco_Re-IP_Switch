@@ -21,8 +21,16 @@
   command: ping -c2 {{ target_ip }}
   delegate_to: localhost
   register: ping_result
-  failed_when: ping_result.rc == 0
+  #failed_when: ping_result.rc == 0
   ignore_errors: true
+
+- name: Assert that {{ new_ip }} address does not exist already on the network
+  asset:
+    that:
+      - not ping_result.rc == 0
+    fail_msg: "{{ new_ip }} already exists, need to change manually."
+    success_msg: "{{ new_ip }} does not exist, moving on!"
+  register: ip_assertion
 
 - name: Create svi for {{ target_interface }}
   ios_interfaces:
