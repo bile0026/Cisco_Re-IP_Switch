@@ -23,7 +23,7 @@
   register: ping_result
   failed_when: ping_result.rc == 0
   ignore_errors: true
-  quiet: true
+  no_log: true
 
 - name: Assert that {{ new_ip }} address does not exist already on the network
   assert:
