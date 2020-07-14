@@ -15,7 +15,7 @@
 
 - name: Set new IP variable for {{ target_interface }}
   set_fact:
-    new_ip: "{{ target_ip }}/{{ ip_string.subnet }}"
+    new_ip: "{{ target_ip }}{{ new_cidr }}"
 
 - name: Ping new IP to make sure it is not in use
   command: ping -c2 {{ target_ip }}
