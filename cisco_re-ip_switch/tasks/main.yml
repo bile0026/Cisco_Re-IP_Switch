@@ -114,4 +114,4 @@
   ios_config:
     lines: "no interface {{ source_interface }}"
   when: remove_ip.changed
-  #notify: save ios
+  notify: save ios
